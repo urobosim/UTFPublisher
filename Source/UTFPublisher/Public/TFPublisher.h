@@ -36,6 +36,9 @@ public:
 
 	void AddObject(UObject* InObject);
 
+	UPROPERTY(EditAnywhere)
+        bool bUseGlobalIP = true;
+
 	// ROSBridge server IP
 	UPROPERTY(EditAnywhere, Category = TF)
 	FString ServerIP;
