@@ -133,6 +133,9 @@ void ATFPublisher::PublishTF()
 
 void ATFPublisher::AddObject(UObject* InObject)
 {
-  UE_LOG(LogTF, Warning, TEXT("Object created %s"), *InObject->GetName());
-  TFTree.AddRootChildNode(InObject->GetName(), InObject);
+  if(!TFTree.FindNode(InObject->GetName()))
+    {
+      UE_LOG(LogTF, Warning, TEXT("Object created %s"), *InObject->GetName());
+      TFTree.AddRootChildNode(InObject->GetName(), InObject);
+    }
 }
