@@ -3,6 +3,8 @@
 
 #include "TFPublisher.h"
 #include "tf2_msgs/TFMessage.h"
+#include "ROSBridgeGameInstance.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ATFPublisher::ATFPublisher()
@@ -31,6 +33,20 @@ ATFPublisher::ATFPublisher()
 void ATFPublisher::BeginPlay()
 {
 	Super::BeginPlay();
+        if(bUseGlobalIP)
+          {
+            UROSBridgeGameInstance* GI = Cast<UROSBridgeGameInstance>(UGameplayStatics::GetGameInstance(this));
+            if(GI)
+              {
+                ServerIP = GI->ROSBridgeServerHost;
+                ServerPORT = GI->ROSBridgeServerPort;
+              }
+            else
+              {
+                UE_LOG(LogTF, Log, TEXT("Wrong GameInstance"));
+              }
+
+          }
 
 	// Build TF tree
 	BuildTFTree();
