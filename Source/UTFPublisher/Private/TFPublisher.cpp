@@ -3,7 +3,7 @@
 
 #include "TFPublisher.h"
 #include "tf2_msgs/TFMessage.h"
-#include "ROSBridgeGameInstance.h"
+#include "RosSettings.h"
 #include "Kismet/GameplayStatics.h"
 #include "RosSettings.h"
 
@@ -36,7 +36,6 @@ void ATFPublisher::BeginPlay()
 	Super::BeginPlay();
         if(bUseGlobalIP)
           {
-
             const URosSettings* Settings = GetDefault<URosSettings>();
             ServerIP = Settings->ROSBridgeServerHost;
             ServerPORT = Settings->ROSBridgeServerPort;
