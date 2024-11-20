@@ -50,7 +50,7 @@ void ATFPublisher::BeginPlay()
 
 	// Create the tf publisher
 	TFPublisher = MakeShareable<FROSBridgePublisher>(
-		new FROSBridgePublisher("tf", "tf2_msgs/TFMessage"));
+		new FROSBridgePublisher(TFTopic, "tf2_msgs/TFMessage"));
 
 	// Connect to ROS
 	ROSBridgeHandler->Connect();
@@ -132,7 +132,10 @@ void ATFPublisher::PublishTF()
 	TSharedPtr<tf2_msgs::TFMessage> TFMsgPtr = TFTree.GetTFMessageMsg(TimeNow, Seq);
 
 	// PUB
-	ROSBridgeHandler->PublishMsg("/tf", TFMsgPtr);
+	if(TFMsgPtr->GetTransforms().Num()!=0)
+	{
+	 	ROSBridgeHandler->PublishMsg(TFTopic, TFMsgPtr);
+	}
 
 	ROSBridgeHandler->Process();
 
@@ -142,9 +145,14 @@ void ATFPublisher::PublishTF()
 
 void ATFPublisher::AddObject(UObject* InObject)
 {
-  if(!TFTree.FindNode(InObject->GetName()))
+  FString Name = InObject->GetName();
+  if(AActor* A = Cast<AActor>(InObject))
     {
-      UE_LOG(LogTF, Warning, TEXT("Object created %s"), *InObject->GetName());
-      TFTree.AddRootChildNode(InObject->GetName(), InObject);
+      Name = FTags::GetValue(A->Tags, TEXT("SemLog"), TEXT("Id"));
+    }
+  if(!TFTree.FindNode(Name))
+    {
+      UE_LOG(LogTF, Log, TEXT("Object created %s"), *Name);
+      TFTree.AddRootChildNode(Name, InObject);
     }
 }

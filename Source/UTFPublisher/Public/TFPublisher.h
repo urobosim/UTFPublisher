@@ -39,6 +39,9 @@ public:
 	UPROPERTY(EditAnywhere)
         bool bUseGlobalIP = true;
 
+	UPROPERTY(EditAnywhere, Category = TF)
+	FString TFTopic = TEXT("/tf");
+
 	// ROSBridge server IP
 	UPROPERTY(EditAnywhere, Category = TF)
 	FString ServerIP;
