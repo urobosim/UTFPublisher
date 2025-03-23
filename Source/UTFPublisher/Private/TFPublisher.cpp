@@ -149,6 +149,7 @@ void ATFPublisher::AddObject(UObject* InObject)
   if(AActor* A = Cast<AActor>(InObject))
     {
       Name = FTags::GetValue(A->Tags, TEXT("SemLog"), TEXT("Id"));
+      Name = TFPrefix + TEXT("/") + Name;
     }
   if(!TFTree.FindNode(Name))
     {

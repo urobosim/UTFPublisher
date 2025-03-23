@@ -54,6 +54,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = TF)
 	FString TFRootFrameName;
 
+	UPROPERTY(EditAnywhere, Category = TF)
+	FString TFPrefix;
+
 	// Use tf root node as blank (avoid calculating relative transforms with root children)
 	// Disable if you want to use the TF tree origin the transform of the TFPublisher actor
 	UPROPERTY(EditAnywhere, Category = TF)
